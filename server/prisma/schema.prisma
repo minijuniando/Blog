@@ -23,19 +23,29 @@ model User {
 model Article {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id])
   photoUrl String
   title String @unique
   content String
+
+  user   User   @relation(fields: [userId], references: [id])
 }
 
-model TechTag {
+model Tag {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
 }
 
+model ArticleTags {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  articleId String @db.ObjectId
+  tagId String @db.ObjectId
+}
+
 model Like {
   userId String @id @default(auto()) @db.ObjectId
-  postId String
+  articleId String @db.ObjectId
+
+  article Article @relation(fields: [articleId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
