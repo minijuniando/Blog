@@ -2,5 +2,5 @@ import { cleanEnv, str, url } from "envalid";
 
 export const env = cleanEnv(process.env, {
   PORT: str(),
-  MONGO_DB_URI: url(),
+  MONGODB_URI: url({ example: "mongodb://<username>:<password>@localhost:<port>/mydb?authSorce=admin" }),
 })
