@@ -1,4 +1,5 @@
 import express from "express";
+import { env } from "./common/env";
 
 export const app = express();
 
@@ -8,10 +9,10 @@ app.get("/health", (request, response) => {
   return response.status(200).send("OK");
 })
 
-app.listen(3333, (err: Error | undefined): void => {
+app.listen(Number(env.PORT), (err: Error | undefined): void => {
   if (err) {
     console.log(err);
     throw err;
   }
-  console.log("HTTP Server Running!");
+  console.log(`HTTP Server Running on ${env.PORT}`);
 })
