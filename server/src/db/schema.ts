@@ -8,8 +8,6 @@ try {
   throw err;
 }
 
-try {
-  const articleSchema = new mongoose.Schema({ name: String });
-} catch (err) {
+const articleSchema = new mongoose.Schema({ name: String });
+export const Article = await mongoose.model("articles", articleSchema);
 
-}
