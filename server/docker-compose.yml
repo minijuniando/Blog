@@ -4,9 +4,10 @@ services:
   minijuniando-mongo:
     image: mongo
     ports:
-      - "27017:27017"
+      - "6005:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_DATABASE: minijuniando
       MONGO_INITDB_ROOT_PASSWORD: minijuniando
     volumes:
       - mongo-data:/data/db
