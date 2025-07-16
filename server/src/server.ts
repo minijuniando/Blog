@@ -5,7 +5,6 @@ import "./db/client.ts";
 export const app = express();
 
 app.use(express.json());
-// app.use();
 
 app.get("/health", (_, response) => {
   return response.status(200).send("OK");
