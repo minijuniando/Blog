@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { describe, expect, it, vi } from "vitest";
-import { validateUser } from "./auth";
+import { validateUser } from "../../middleware/auth";
 
 vi.mock("jsonwebtoken");
 
@@ -22,7 +22,6 @@ describe("Middleware: validateUser", () => {
   });
 
   it("should return 403 if token is invalid", async () => {
-    // Arrange
     const req = {
       headers: { authorization: "Bearer invalidtoken" },
     } as Request;
@@ -53,6 +52,7 @@ describe("Middleware: validateUser", () => {
     const req = {
       headers: { authorization: "Bearer validtoken" },
     } as Request;
+
     const res = {
       status: vi.fn().mockReturnThis(),
       send: vi.fn(),
