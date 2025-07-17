@@ -54,7 +54,6 @@ describe("Middleware: validateUser", () => {
     } as Request;
 
     const res = {
-      status: vi.fn().mockReturnThis(),
       send: vi.fn(),
     } as unknown as Response;
     const next = vi.fn();
