@@ -1,4 +1,5 @@
-import jwt, { type JwtPayload, type VerifyErrors } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import type { JwtPayload, VerifyErrors } from "jsonwebtoken";
 import { env } from "../common/env";
 import type { Request, Response } from "express";
 
@@ -10,7 +11,7 @@ export async function validateUser(
   const { authorization: authHeader } = request.headers;
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) return response.status(401).send();
+  if (!token) return response.status(401).send("Missing auth token");
 
   jwt.verify(
     token,

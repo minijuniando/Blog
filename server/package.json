@@ -7,7 +7,7 @@
     "dev": "tsx --env-file .env --watch src/server.ts",
     "build": "tsup src/server.ts --out-dir dist",
     "start": "node --env-file .env dist/server.js",
-    "test": "tsx --env-file .env src/test/index.test.ts"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,8 @@
     "chalk": "^5.4.1",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@biomejs/biome": "^2.1.1",
