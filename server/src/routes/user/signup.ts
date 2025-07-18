@@ -3,6 +3,9 @@ import { handleSendEmail } from "../../utils/send-email";
 import type { Request, Response } from "express";
 import { verifyEmailHtml } from "../../utils/html/verify-email";
 import chalk from "chalk";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { env } from "../../common/env";
 
 export const signup = async (
 	request: Request,
@@ -63,9 +66,7 @@ export const signup = async (
 			});
 		}
 
-		const hashedPassword = await hashPassword(password);
-		const verificationToken = generateVerificationToken();
-
+		const hashedPassword = await bcrypt.hash(password, 8);
 		const user = await db.user.create({
 			data: {
 				username: username,
@@ -83,6 +84,11 @@ export const signup = async (
 			},
 		});
 
+		const token = jwt.sign(
+			{ id: user.id, email: user.email },
+			env.TOKEN_SECRET,
+		);
+
 		try {
 			await handleSendEmail({
 				userEmail: user.email,
@@ -92,6 +98,9 @@ export const signup = async (
 		} catch (emailError) {
 			console.error("Erro ao enviar email de verificação:", emailError);
 		}
+		return response
+			.status(201)
+			.send({ jwt: token, id: user.id, email: user.email });
 	} catch (error) {
 		console.error(chalk.red(error));
 
