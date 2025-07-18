@@ -4,7 +4,7 @@ import type { SendEmailParams } from "../types/user";
 
 export async function handleSendEmail({
 	userEmail,
-	content,
+	subject,
 	html,
 }: SendEmailParams): Promise<void> {
 	try {
@@ -25,7 +25,7 @@ export async function handleSendEmail({
 		transport.sendMail({
 			from: `Plush<${env.MY_GMAIL}>`,
 			to: userEmail,
-			subject: content,
+			subject,
 			html,
 		});
 	} catch (error) {

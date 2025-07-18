@@ -24,9 +24,11 @@
   "dependencies": {
     "@biomejs/biome": "^2.1.1",
     "@prisma/client": "^6.12.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/nodemailer": "^6.4.17",
+    "bcrypt": "^6.0.0",
     "envalid": "^8.1.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
