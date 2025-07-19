@@ -7,60 +7,16 @@ import { db } from "../../db/client";
 import { verifyEmailHtml } from "../../utils/html/verify-email";
 import { handleSendEmail } from "../../utils/send-email";
 import { roles } from "../../types/user";
+import { validateSignup } from "../../schema/user";
 
 export const signup = async (
   request: Request,
   response: Response,
 ): Promise<unknown> => {
   try {
-    const { username, email, password, confirmPassword, role } = request.body;
-    if (!username || !email || !password || !confirmPassword) {
-      return response.status(400).json({
-        success: false,
-        message: "Todos os campos são obrigatórios",
-      });
-    }
-
-    if (!isValidEmail(email)) {
-      return response.status(400).json({
-        success: false,
-        message: "Email inválido",
-      });
-    }
-
-    if (password !== confirmPassword) {
-      return response.status(400).json({
-        success: false,
-        message: "Senhas não coincidem",
-      });
-    }
-
-    if (password.length < 6)
-      return response.status(400).json({
-        success: false,
-        message: "Senha deve ter pelo menos 6 caracteres",
-      });
-
-    if (username.length < 6) {
-      return response.status(400).json({
-        success: false,
-        message: "Nome deve ter pelo menos 2 caracteres",
-      });
-    }
-
-    if (!Object.values(role).includes(role)) {
-      return response.status(400).json({
-        success: false,
-        message: "Invalid role",
-      });
-    }
-
-    if (username.includes(" ")) {
-      return response.status(400).json({
-        success: false,
-        message: "Nome não pode conter espaços",
-      });
-    }
+    const { username, email, password, role } = await validateSignup(
+      request.body,
+    );
 
     const existingUser = await db.user.findUnique({
       where: { email: email.toLowerCase() },
@@ -107,6 +63,12 @@ export const signup = async (
     }
     return response.status(201).send({ user, jwt: token });
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return response.status(400).json({
+        success: false,
+        message: error.errors[0].message,
+      });
+    }
     console.error(chalk.red(error));
 
     response.status(500).json({
