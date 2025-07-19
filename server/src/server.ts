@@ -11,7 +11,7 @@ app.get("/health", (_, response) => {
   return response.status(200).send("OK");
 });
 
-app.listen(3333, (err: Error | undefined): void => {
+app.listen(env.PORT, (err: Error | undefined): void => {
   if (err) {
     console.log(err);
     throw err;

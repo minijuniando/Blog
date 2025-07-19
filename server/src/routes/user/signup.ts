@@ -13,7 +13,6 @@ const router = Router();
 
 router.post("/", async (request, response): Promise<unknown> => {
   try {
-    console.log(request.body);
     const { username, email, password, role } = await validateSignup(
       request.body,
     );

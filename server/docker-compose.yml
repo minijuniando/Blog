@@ -11,6 +11,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: minijuniando
     volumes:
       - mongo-data:/data/db
+    command: mongod --replSet rs0
 
 volumes:
   mongo-data:
