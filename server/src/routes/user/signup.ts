@@ -2,17 +2,17 @@ import bcrypt from "bcrypt";
 import chalk from "chalk";
 import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import z from "zod";
 import { env } from "../../common/env";
 import { db } from "../../db/client";
 import { validateSignup } from "../../schema/user";
 import { verifyEmailHtml } from "../../utils/html/verify-email";
 import { handleSendEmail } from "../../utils/send-email";
-import z from "zod";
+import { Router } from "express";
 
-export const signup = async (
-  request: Request,
-  response: Response,
-): Promise<unknown> => {
+const router = Router();
+
+router.get("/signup", async (request, response): Promise<unknown> => {
   try {
     const { username, email, password, role } = await validateSignup(
       request.body,
@@ -52,15 +52,12 @@ export const signup = async (
       env.TOKEN_SECRET,
     );
 
-    try {
-      await handleSendEmail({
-        userEmail: user.email,
-        subject: "Verificação de Email - Blog Mini-Juniando",
-        html: verifyEmailHtml(user.username),
-      });
-    } catch (emailError) {
-      console.error("Erro ao enviar email de verificação:", emailError);
-    }
+    await handleSendEmail({
+      userEmail: user.email,
+      subject: "Verificação de Email - Blog Mini-Juniando",
+      html: verifyEmailHtml(user.username),
+    });
+
     return response.status(201).send({ user, jwt: token });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -76,4 +73,4 @@ export const signup = async (
       message: "Erro interno do servidor",
     });
   }
-};
+});

@@ -1,1 +1,3 @@
-@baseUrl = 
+@baseUrl = http://localhost:3333
+
+POST {{baseUrl}}/signup
