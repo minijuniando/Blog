@@ -1,16 +1,17 @@
-name: minijuniando
-
 services:
-  minijuniando-mongo:
-    image: mongo
+  mongo:
+    image: mongo:6
     ports:
-      - "6005:27017"
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_DATABASE: minijuniando
       MONGO_INITDB_ROOT_PASSWORD: minijuniando
-    volumes:
-      - mongo-data:/data/db
 
-volumes:
-  mongo-data:
+  mongo-express:
+    image: mongo-express
+    ports:
+     - "8081:8081"
+    environment:
+      ME_CONFIG_ADMINUSERNAME: root
+      ME_CONFIG_ADMINPASSWORD: minijuniando
+      ME_CONFIG_MONGODB_URL: "mongodb://root:minijuniando@mongo:27017/"
