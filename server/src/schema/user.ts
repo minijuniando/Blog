@@ -1,4 +1,3 @@
-import type { Request } from "express";
 import z from "zod";
 import { roles } from "../types/user";
 
@@ -10,17 +9,22 @@ export async function validateSignup(
       username: z
         .string()
         .min(2, "Nome deve ter pelo menos 2 caracteres")
-        .max(30, "Username too long")
+        .max(30, "Username muito longo.")
         .refine((name) => !name.includes(" "), {
           message: "Nome não pode conter espaços",
         }),
       email: z.email("Email inválido"),
-      password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
-      confirmPassword: z.string("Confirm password is required"),
-      role: z.enum(Object.values(roles), "Invalid role"),
+      password: z
+        .string()
+        .min(6, "Senha deve ter pelo menos 6 caracteres")
+        .refine((pass: string): boolean => !pass.includes(" "), {
+          message: "Senha não pode conter espaços",
+        }),
+      confirmPassword: z.string("Confirmar senha é obrigatório."),
+      role: z.enum(Object.values(roles), "Função inválida"),
     })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Senhas não coincidem",
+    .refine((data): boolean => data.password === data.confirmPassword, {
+      error: "Senhas não coincidem",
       path: ["confirmPassword"],
     });
 

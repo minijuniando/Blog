@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import chalk from "chalk";
-import type { Request, Response } from "express";
+import { Router } from "express";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import { env } from "../../common/env";
@@ -8,12 +8,12 @@ import { db } from "../../db/client";
 import { validateSignup } from "../../schema/user";
 import { verifyEmailHtml } from "../../utils/html/verify-email";
 import { handleSendEmail } from "../../utils/send-email";
-import { Router } from "express";
 
 const router = Router();
 
-router.get("/signup", async (request, response): Promise<unknown> => {
+router.post("/", async (request, response): Promise<unknown> => {
   try {
+    console.log(request.body);
     const { username, email, password, role } = await validateSignup(
       request.body,
     );
@@ -25,7 +25,7 @@ router.get("/signup", async (request, response): Promise<unknown> => {
     if (existingUser) {
       return response.status(400).json({
         success: false,
-        message: "Usuário já existe com este email",
+        message: "Este usuário já existe",
       });
     }
 
@@ -74,3 +74,5 @@ router.get("/signup", async (request, response): Promise<unknown> => {
     });
   }
 });
+
+export const signupRoute = router;
