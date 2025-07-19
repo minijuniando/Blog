@@ -4,10 +4,10 @@ import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../../common/env";
 import { db } from "../../db/client";
+import { validateSignup } from "../../schema/user";
 import { verifyEmailHtml } from "../../utils/html/verify-email";
 import { handleSendEmail } from "../../utils/send-email";
-import { roles } from "../../types/user";
-import { validateSignup } from "../../schema/user";
+import z from "zod";
 
 export const signup = async (
   request: Request,
@@ -66,7 +66,7 @@ export const signup = async (
     if (error instanceof z.ZodError) {
       return response.status(400).json({
         success: false,
-        message: error.errors[0].message,
+        message: error.issues[0].message,
       });
     }
     console.error(chalk.red(error));

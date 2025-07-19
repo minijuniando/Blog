@@ -5,8 +5,8 @@ import { validateUser } from "../../middleware/auth";
 
 vi.mock("jsonwebtoken");
 
-describe("Middleware: validateUser", () => {
-  it("should return 401 if no authorization header is present", async () => {
+describe("Middleware: validateUser", (): void => {
+  it("should return 401 if no authorization header is present", async (): Promise<void> => {
     const req = { headers: {} } as Request;
     const res = {
       status: vi.fn().mockReturnThis(),
