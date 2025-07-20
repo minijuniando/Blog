@@ -1,7 +1,6 @@
 import express from "express";
 import { env } from "./common/env";
 import { signupRoute } from "./routes/user/signup";
-
 export const app = express();
 
 app.use(express.json());

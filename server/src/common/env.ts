@@ -1,8 +1,8 @@
-import { cleanEnv, num, str, url } from "envalid";
+import { cleanEnv, num, str } from "envalid";
 
 export const env = cleanEnv(process.env, {
   PORT: num(),
-  MONGODB_URI: url({
+  MONGODB_URI: str({
     example: "mongodb://<username>:<password>@localhost:<port>/minijuniando",
   }),
   TOKEN_SECRET: str(),
