@@ -2,8 +2,8 @@ import chalk from "chalk";
 import { Router } from "express";
 import z from "zod";
 import { db } from "../../db/client";
-import { sendCodeToUser } from "../../function/user/send-code-to-user";
 import { createUser } from "../../function/user/create-user";
+import { sendCodeToUser } from "../../function/user/send-code-to-user";
 
 const router = Router();
 
@@ -49,6 +49,7 @@ router.post("/:code", async (request, response) => {
   if (!code) return response.status(400).send("Missing code on request body");
 
   const result = await createUser(email, code);
+  if (!result) return response.status(400).send("Código inválido ou expirado");
   return response.status(201).send(result);
 });
 
