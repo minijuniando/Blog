@@ -1,5 +1,7 @@
-import { Router } from "express";
 import bcrypt from "bcrypt";
+import { Router } from "express";
+import jwt from "jsonwebtoken";
+import { env } from "../../common/env";
 import { db } from "../../db/client";
 
 const router = Router();
@@ -13,9 +15,16 @@ router.post("/login", async (request, response) => {
 	if (!user) return response.status(400).send("Este usuário não existe");
 
 	const hashedPassword = user.password;
+	const comparedPassword = bcrypt.compare(hashedPassword, password);
 
-	const comparedPassword = bcrypt.compare(user.password, password);
-	const salve = "salve";
+	if (!comparedPassword) return response.status(400).send("Senha inválida");
+
+	const token = await jwt.sign(
+		{ id: user.id, email: user.email },
+		env.TOKEN_SECRET,
+	);
+
+	return { token };
 });
 
 export const loginRoute = router;
