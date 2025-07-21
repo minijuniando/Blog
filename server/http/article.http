@@ -1,0 +1,4 @@
+@baseUrl = http://localhost:3333
+
+### Get All - Retornar todos os artigos
+GET {{baseUrl}}/articles
