@@ -5,6 +5,14 @@ export type SendEmailParams = {
   text?: string;
 };
 
+export type UserDetails = {
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+  confirmPassword: string;
+};
+
 export const roles = {
   READER: "READER",
   ADMIN: "ADMIN",
