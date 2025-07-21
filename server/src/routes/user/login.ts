@@ -19,10 +19,7 @@ router.post("/login", async (request, response) => {
 
 	if (!comparedPassword) return response.status(400).send("Senha inválida");
 
-	const token = await jwt.sign(
-		{ id: user.id, email: user.email },
-		env.TOKEN_SECRET,
-	);
+	const token = jwt.sign({ id: user.id, email: user.email }, env.TOKEN_SECRET);
 
 	return { token };
 });
