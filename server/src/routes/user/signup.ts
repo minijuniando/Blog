@@ -22,9 +22,9 @@ router.post("/", async (request, response): Promise<unknown> => {
       });
     }
 
-    const { user, jwt } = await sendCodeToUser(request.body);
+    const result = await sendCodeToUser(request.body);
 
-    return response.status(201).send({ user, jwt });
+    return response.status(201).send(result);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return response.status(400).json({
@@ -49,6 +49,7 @@ router.post("/:code", async (request, response) => {
   if (!code) return response.status(400).send("Missing code on request body");
 
   const result = await createUser(email, code);
+  return response.status(201).send(result);
 });
 
 export const signupRoute = router;

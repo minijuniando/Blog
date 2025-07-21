@@ -7,7 +7,8 @@ import { codes } from "./send-code-to-user";
 export const createUser = async (email: string, code: string) => {
   try {
     const userData = codes[email];
-    if (!userData || userData.code !== code) return null;
+    if (!userData || userData.code !== code)
+      throw new Error("Código inválido ou expirado");
 
     const user = await db.user.create({
       data: {
