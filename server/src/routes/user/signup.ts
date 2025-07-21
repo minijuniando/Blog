@@ -3,6 +3,7 @@ import { Router } from "express";
 import z from "zod";
 import { db } from "../../db/client";
 import { sendCodeToUser } from "../../function/user/send-code-to-user";
+import { createUser } from "../../function/user/create-user";
 
 const router = Router();
 
@@ -41,7 +42,13 @@ router.post("/", async (request, response): Promise<unknown> => {
 });
 
 router.post("/:code", async (request, response) => {
-  const salve = "salve";
+  const { code } = request.params;
+  const { email } = request.body;
+
+  if (!email) return response.status(400).send("Missing email on request body");
+  if (!code) return response.status(400).send("Missing code on request body");
+
+  const result = await createUser(email, code);
 });
 
 export const signupRoute = router;

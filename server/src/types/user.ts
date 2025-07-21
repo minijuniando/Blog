@@ -9,8 +9,8 @@ export type NewAccountTemporaryData = {
   username: string;
   email: string;
   password: string;
+  code: string;
   role: string;
-  confirmPassword: string;
   generatedAt: number;
 };
 

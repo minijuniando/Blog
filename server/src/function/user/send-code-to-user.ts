@@ -20,35 +20,31 @@ setInterval((): void => {
 }, ONE_SECOND_IN_MS);
 
 export const sendCodeToUser = async (body: NewAccountTemporaryData) => {
-  const { username, email, password, role } = await validateSignup(body);
+  try {
+    const { username, email, password, role } = await validateSignup(body);
 
-  const hashedPassword = await bcrypt.hash(password, 8);
-  /**/
-  const user = await db.user.create({
-    data: {
-      username,
-      email: email.toLowerCase(),
-      password: hashedPassword,
-      role,
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      role: true,
-      photoUrl: true,
-      createdAt: true,
-    },
-  });
+    const hashedPassword = await bcrypt.hash(password, 8);
+    const generatedCode = Math.random().toString().slice(2, 6);
 
-  const token = jwt.sign({ id: user.id, email: user.email }, env.TOKEN_SECRET);
-  const generatedCode = Math.random().toString().slice(2, 6);
+    await Promise.all([
+      await handleSendEmail({
+        userEmail: email,
+        subject: "Verificação de Email - Blog Mini-Juniando",
+        html: verifyEmailHtml(username, generatedCode),
+      }),
 
-  await handleSendEmail({
-    userEmail: user.email,
-    subject: "Verificação de Email - Blog Mini-Juniando",
-    html: verifyEmailHtml(user.username, ""),
-  });
-
-  return { user, jwt: token };
+      (codes[email] = {
+        username,
+        code: generatedCode,
+        email,
+        password: hashedPassword,
+        role,
+        generatedAt: Date.now(),
+      }),
+    ]);
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
