@@ -1,5 +1,5 @@
 import { db } from "../../db/client";
-import { ArticleSchema } from "../../types/article";
+import type { ArticleSchema } from "../../types/article";
 
 export async function createArticle({
   content,
