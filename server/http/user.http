@@ -5,10 +5,10 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "username": "victor",
-    "email":  "victorarruda1508@gmail.com",
-    "password": "salvesalve",
-    "confirmPassword": "salvesalve",
+    "username": "testeteste",
+    "email":  "netlinksape@gmail.com",
+    "password": "senhamuitoforte",
+    "confirmPassword": "senhamuitoforte",
     "role": "WRITER"
 }
 
