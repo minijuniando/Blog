@@ -2,7 +2,8 @@ import { Router } from "express";
 import { createArticle } from "../../function/article/create-article";
 const router = Router();
 
-router.get("/")
+//router.get("/")
+
 router.post("/", async (request, response) => {
   //const { userId, photoUrl, title, content } = request.body;
   //TODO: ALGUM COMPORTAMENTO CASO NÃO TENHA UMA FOTO

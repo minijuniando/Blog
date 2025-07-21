@@ -1,5 +1,6 @@
 import express from "express";
 import { env } from "./common/env";
+import { articleRoutes } from "./routes/article/create-article";
 import { loginRoute } from "./routes/user/login";
 import { signupRoute } from "./routes/user/signup";
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
+app.use("/articles", articleRoutes);
 
 app.get("/health", (_, response) => {
 	return response.status(200).send("OK");
