@@ -19,9 +19,7 @@ setInterval((): void => {
   }
 }, ONE_SECOND_IN_MS);
 
-export const sendCodeToUser = async (
-  body: NewAccountTemporaryData,
-): Promise<unknown> => {
+export const sendCodeToUser = async (body: NewAccountTemporaryData) => {
   const { username, email, password, role } = await validateSignup(body);
 
   const hashedPassword = await bcrypt.hash(password, 8);
@@ -44,11 +42,12 @@ export const sendCodeToUser = async (
   });
 
   const token = jwt.sign({ id: user.id, email: user.email }, env.TOKEN_SECRET);
+  const generatedCode = Math.random().toString().slice(2, 6);
 
   await handleSendEmail({
     userEmail: user.email,
     subject: "Verificação de Email - Blog Mini-Juniando",
-    html: verifyEmailHtml(user.username),
+    html: verifyEmailHtml(user.username, ""),
   });
 
   return { user, jwt: token };

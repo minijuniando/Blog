@@ -2,12 +2,14 @@ import chalk from "chalk";
 import { Router } from "express";
 import z from "zod";
 import { db } from "../../db/client";
-import { } from "../../function/user/send-code-to-user";
+import { sendCodeToUser } from "../../function/user/send-code-to-user";
 
 const router = Router();
 
 router.post("/", async (request, response): Promise<unknown> => {
   try {
+    const { email } = request.body;
+
     const existingUser = await db.user.findUnique({
       where: { email: email.toLowerCase() },
     });
@@ -19,9 +21,9 @@ router.post("/", async (request, response): Promise<unknown> => {
       });
     }
 
-    const { user } = await sendCodeToUser(request.body);
+    const { user, jwt } = await sendCodeToUser(request.body);
 
-    return response.status(201).send({ user, jwt: token });
+    return response.status(201).send({ user, jwt });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return response.status(400).json({
@@ -36,6 +38,10 @@ router.post("/", async (request, response): Promise<unknown> => {
       message: "Erro interno do servidor",
     });
   }
+});
+
+router.post("/:code", async (request, response) => {
+  const salve = "salve";
 });
 
 export const signupRoute = router;
