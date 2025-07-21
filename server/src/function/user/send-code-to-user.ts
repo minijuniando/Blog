@@ -6,6 +6,7 @@ import { validateSignup } from "../../schema/user";
 import type { NewAccountTemporaryData } from "../../types/user";
 import { verifyEmailHtml } from "../../utils/html/verify-email";
 import { handleSendEmail } from "../../utils/send-email";
+import { response } from "express";
 
 export const codes: Record<string, NewAccountTemporaryData> = {};
 const ONE_SECOND_IN_MS = 1000;
@@ -23,6 +24,27 @@ export const sendCodeToUser = async (body: NewAccountTemporaryData) => {
   try {
     const { username, email, password, role } = await validateSignup(body);
 
+    const existingUserByEmail = await db.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (existingUserByEmail)
+      return response
+        .status(400)
+        .send(`Usuário com o email: ${email} já existe`);
+    const existingUserByUsername = await db.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (existingUserByUsername)
+      return response
+        .status(400)
+        .send(`Usuário com o username: ${username} já existe`);
+
     const hashedPassword = await bcrypt.hash(password, 8);
     const generatedCode = Math.random().toString().slice(2, 6);
 
@@ -32,7 +54,6 @@ export const sendCodeToUser = async (body: NewAccountTemporaryData) => {
         subject: "Verificação de Email - Blog Mini-Juniando",
         html: verifyEmailHtml(username, generatedCode),
       }),
-
       (codes[email] = {
         username,
         code: generatedCode,
