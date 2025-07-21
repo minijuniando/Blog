@@ -11,7 +11,7 @@ export const codes: Record<string, NewAccountTemporaryData> = {};
 const ONE_SECOND_IN_MS = 1000;
 const FIVE_MINUTES_IN_MS = 1000 * 300;
 
-setInterval(() => {
+setInterval((): void => {
   for (const code in codes) {
     if (Date.now() - FIVE_MINUTES_IN_MS > codes[code].generatedAt) {
       delete codes[code];
@@ -25,32 +25,31 @@ export const sendCodeToUser = async (
   const { username, email, password, role } = await validateSignup(body);
 
   const hashedPassword = await bcrypt.hash(password, 8);
-/**
-  * /
-const user = await db.user.create({
-  data: {
-    username,
-    email: email.toLowerCase(),
-    password: hashedPassword,
-    role,
-  },
-  select: {
-    id: true,
-    username: true,
-    email: true,
-    role: true,
-    photoUrl: true,
-    createdAt: true,
-  },
-});
+  /**/
+  const user = await db.user.create({
+    data: {
+      username,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      role,
+    },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      role: true,
+      photoUrl: true,
+      createdAt: true,
+    },
+  });
 
-const token = jwt.sign({ id: user.id, email: user.email }, env.TOKEN_SECRET);
+  const token = jwt.sign({ id: user.id, email: user.email }, env.TOKEN_SECRET);
 
-await handleSendEmail({
-  userEmail: user.email,
-  subject: "Verificação de Email - Blog Mini-Juniando",
-  html: verifyEmailHtml(user.username),
-});
+  await handleSendEmail({
+    userEmail: user.email,
+    subject: "Verificação de Email - Blog Mini-Juniando",
+    html: verifyEmailHtml(user.username),
+  });
 
-return { user, jwt: token };
+  return { user, jwt: token };
 };
