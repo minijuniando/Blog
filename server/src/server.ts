@@ -1,9 +1,12 @@
 import express from "express";
 import { env } from "./common/env";
 import { signupRoute } from "./routes/user/signup";
+
 export const app = express();
 
+//WARN: coloquem todas as rotas embaixo disso aqui, senão não reconhece o body da requisição
 app.use(express.json());
+
 app.use("/signup", signupRoute);
 
 app.get("/health", (_, response) => {
