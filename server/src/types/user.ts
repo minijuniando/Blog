@@ -5,12 +5,13 @@ export type SendEmailParams = {
   text?: string;
 };
 
-export type UserDetails = {
+export type NewAccountTemporaryData = {
   username: string;
   email: string;
   password: string;
   role: string;
   confirmPassword: string;
+  generatedAt: number;
 };
 
 export const roles = {
