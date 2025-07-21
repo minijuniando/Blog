@@ -2,3 +2,15 @@
 
 ### Get All - Retornar todos os artigos
 GET {{baseUrl}}/articles
+
+
+### Create - Criar artigos
+POST {{baseUrl}}/articles
+Content-Type: application/json
+
+{
+  "userId": "",
+  "title": "Salve",
+  "photoUrl": "",
+  "content": "bom dia a todoss"
+}
