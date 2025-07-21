@@ -1,6 +1,5 @@
 import { db } from "../../db/client";
 import { ArticleSchema } from "../../types/article";
-// Article service
 
 export async function createArticle({
   content,
@@ -22,6 +21,8 @@ export async function createArticle({
     });
 
     if (!existingUserById) return null;
+
+    if (!existingArticleByTitle) return null;
 
     const article = await db.article.create({
       data: {
