@@ -14,3 +14,7 @@ Content-Type: application/json
   "photoUrl": "",
   "content": "bom dia a todoss"
 }
+
+### Delete - Deletar artigos
+POST {{baseUrl}}/articles/
+
