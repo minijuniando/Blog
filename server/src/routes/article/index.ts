@@ -9,7 +9,9 @@ import type { ArticleSchema } from "../../types/article";
 
 const router = Router();
 
-router.get("/", async (_, response) => {
+//TODO: JOIN COM UM COUNT DAS TABELAS DE LIKE E VIEW PRA MOSTRAR OS LIKES E AS VIEWS DO ARTIGO
+
+router.get("/articles", async (_, response) => {
   try {
     const articles = await getArticles();
     return response.status(200).send({ articles });
@@ -33,7 +35,7 @@ router.get("/:userId/articles", async (request, response) => {
 });
 
 //TODO: CRIAR BUCKET PRA SALVAR IMAGEM
-router.post("/", async (request, response) => {
+router.post("/articles", async (request, response) => {
   try {
     let fileUrl: string | null = null;
     const { userId, photoUrl, title, content } = request.body;
@@ -62,7 +64,7 @@ router.post("/", async (request, response) => {
   }
 });
 
-router.delete("/:articleId", async (request, response) => {
+router.delete("/articles/:articleId", async (request, response) => {
   try {
     const { articleId } = request.params;
     const result = await deleteArticle(articleId);
@@ -79,7 +81,7 @@ router.delete("/:articleId", async (request, response) => {
   }
 });
 
-router.put("/:articleId", async (request, response) => {
+router.put("/articles/:articleId", async (request, response) => {
   try {
     const { articleId } = request.params;
     const articleById = await db.article.findFirst({

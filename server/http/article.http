@@ -4,7 +4,7 @@
 GET {{baseUrl}}/articles
 
 
-### Get All - Retornar todos os artigos
+### Get All - Retornar todos os artigos do determinado usuário
 GET {{baseUrl}}/687e2a9ebd674c47cbdb4fb4/articles
 
 
