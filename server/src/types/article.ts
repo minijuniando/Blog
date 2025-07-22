@@ -1,5 +1,5 @@
 export type ArticleSchema = {
-  id: string;
+  id?: string;
   userId: string;
   photoUrl: string;
   title: string;

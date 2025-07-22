@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { upsertArticle } from "../../function/article/create-article";
+import { db } from "../../db/client";
 import { deleteArticle } from "../../function/article/delete-article";
 import { getArticles } from "../../function/article/get-articles";
+import { upsertArticle } from "../../function/article/upsert-article";
 import type { ArticleSchema } from "../../types/article";
-import { db } from "../../db/client";
 
 const router = Router();
 
-router.get("/", async (request, response) => {
+router.get("/", async (_, response) => {
   try {
     const articles = await getArticles();
 
@@ -29,7 +29,7 @@ router.post("/", async (request, response) => {
       fileUrl =
         "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fs2.glbimg.com%2F95FpFRrI5wD8oZnlDnJp8Vq0Bik%3D%2F0x88%3A690x558%2F690x470%2Fs.glbimg.com%2Fes%2Fge%2Ff%2Foriginal%2F2016%2F04%2F25%2Fribamar.jpg&f=1&nofb=1&ipt=a1f4007aefec58a612fb7728361a264f097d266156585f3a2eed968c4eb58453";
     }
-    const result = await createArticle({
+    const result = await upsertArticle({
       content,
       photoUrl: fileUrl ?? photoUrl,
       title,
@@ -48,6 +48,7 @@ router.delete("/:articleId", async (request, response) => {
   try {
     const { articleId } = request.params;
     const deletedArticle = await deleteArticle(articleId);
+
     if (!deletedArticle)
       return response.status(400).send("This article not exists");
 
@@ -59,34 +60,53 @@ router.delete("/:articleId", async (request, response) => {
 });
 
 router.put("/:articleId", async (request, response) => {
-  const { articleId } = request.params;
-  if (!articleId)
-    return response.status(400).send("Missing articleId on request param");
-  const articleById = await db.article.findFirst({
-    where: {
-      id: articleId,
-    },
-  });
+  try {
+    const { articleId } = request.params;
 
-  if (!articleById)
+    const articleById = await db.article.findFirst({
+      where: {
+        id: articleId,
+      },
+    });
+
+    if (!articleById)
+      return response
+        .status(404)
+        .send({ message: `Artigo com o id: ${articleId} não foi encontrado` });
+
+    const existingUserById = await db.user.findFirst({
+      where: {
+        id: articleById.userId,
+      },
+    });
+
+    if (!existingUserById)
+      return response.status(404).send({
+        message: `Usuário com o id: ${articleById.userId} não foi encontrado`,
+      });
+
+    if (existingUserById.role !== "WRITER") return null;
+
+    const { content, photoUrl, title }: ArticleSchema = request.body;
+
+    const existingArticleByTitle = await db.article.findFirst({
+      where: {
+        title: title,
+      },
+    });
+
+    if (existingArticleByTitle)
+      return response.status(400).send({
+        message: `Artigo com o titulo: ${articleById.title} já existe`,
+      });
+
     return response
-      .status(404)
-      .send(`Article with id: ${articleId} not founded`);
-
-  const { content, photoUrl, title }: ArticleSchema = request.body;
-  const { userId } = articleById;
-
-  const result = upsertArticle({
-    id: articleId,
-    content,
-    photoUrl,
-    title,
-    userId,
-  });
-
-  if (!result) return response.status(400).send("Deu erro aq");
-
-  return result;
+      .status(200)
+      .send({ result: articleById, salve: "salve salve" });
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send({ message: "Internal Server Error" });
+  }
 });
 
 export const articleRoutes = router;

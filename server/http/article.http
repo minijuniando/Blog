@@ -10,11 +10,20 @@ Content-Type: application/json
 
 {
   "userId": "687e2a9ebd674c47cbdb4fb4",
-  "title": "Salve",
+  "title": "ta ligado papai 2",
   "photoUrl": "",
-  "content": "bom dia a todoss"
+  "content": "bom dia a todoss parte 2"
 }
 
 ### Delete - Deletar artigos
 POST {{baseUrl}}/articles/
 
+### Update - Atualizar artigos
+PUT {{baseUrl}}/articles/687f76f40d3c84484523c9b5
+Content-Type: application/json
+
+{
+  "title": "new title holy shit my guy",
+  "photoUrl": "",
+  "content": "bom dia a todoss leu me deu hahai salve bom dia"
+}

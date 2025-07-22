@@ -9,24 +9,11 @@ export async function upsertArticle({
   userId,
 }: ArticleSchema): Promise<ArticleSchema | null> {
   try {
-    const existingUserById = await db.user.findFirst({
+    /*
+     *    const article = await db.article.upsert({
       where: {
-        id: userId,
+        id: id,
       },
-    });
-
-    const existingArticleByTitle = await db.article.findFirst({
-      where: {
-        title,
-      },
-    });
-
-    if (!existingUserById) return null;
-
-    if (existingUserById.role !== "WRITER") return null;
-    if (existingArticleByTitle) return null;
-
-    const article = await db.article.upsert({
       create: {
         content,
         photoUrl,
@@ -41,14 +28,22 @@ export async function upsertArticle({
         title,
         updatedAt: new Date(),
       },
-      where: {
-        id,
+      select: {
+        id: true,
+        userId: true,
+        title: true,
+        content: true,
+        photoUrl: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
-    return article;
+
+     * */
+    //return article;
   } catch (error) {
-    console.log(error);
+    console.error("Error in upsertArticle:", error);
     throw error;
   }
 }
