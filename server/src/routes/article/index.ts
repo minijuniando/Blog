@@ -1,18 +1,18 @@
-import { request, Router } from "express";
+import { Router } from "express";
 import { db } from "../../db/client";
 import { createArticle } from "../../function/article/create-article";
 import { deleteArticle } from "../../function/article/delete-article";
 import { getArticles } from "../../function/article/get-articles";
+import { getUserArticles } from "../../function/article/get-user-articles";
 import { updateArticle } from "../../function/article/update-articles";
 import type { ArticleSchema } from "../../types/article";
-import { getUserArticles } from "../../function/article/get-user-articles";
 
 const router = Router();
 
 router.get("/", async (_, response) => {
   try {
     const articles = await getArticles();
-    return response.status(200).send(articles);
+    return response.status(200).send({ articles });
   } catch (error) {
     console.log(error);
     return response.status(500).send(error);
@@ -24,7 +24,9 @@ router.get("/:userId/articles", async (request, response) => {
   const result = await getUserArticles(userId);
 
   if ("error" in result) {
-    return response.status(404).send(result);
+    return response
+      .status(result.status)
+      .send({ error: result.error, message: result.message });
   }
 
   return response.status(200).send(result);
@@ -48,10 +50,12 @@ router.post("/", async (request, response) => {
       userId,
     });
     if ("error" in result) {
-      return response.status(result.status).send(result);
+      return response
+        .status(result.status)
+        .send({ error: result.error, message: result.message });
     }
 
-    return response.status(201).send(result);
+    return response.status(201).send({ article: result });
   } catch (error) {
     console.log(error);
     return response.status(500).send(error);
@@ -61,9 +65,14 @@ router.post("/", async (request, response) => {
 router.delete("/:articleId", async (request, response) => {
   try {
     const { articleId } = request.params;
-    const deletedArticle = await deleteArticle(articleId);
+    const result = await deleteArticle(articleId);
 
-    return response.status(200).send({ success: true });
+    if (typeof result !== "boolean") {
+      return response
+        .status(result.status)
+        .send({ error: result.error, message: result.message });
+    }
+    return response.status(200).send({ success: result });
   } catch (error) {
     console.log(error);
     response.status(500).send(error);
@@ -80,10 +89,10 @@ router.put("/:articleId", async (request, response) => {
     });
 
     if (!articleById)
-      return {
+      return response.status(400).send({
         error: true,
         message: `O artigo com o id: ${articleId} não foi encontrado`,
-      };
+      });
 
     const { content, photoUrl, title }: ArticleSchema = request.body;
 
@@ -96,7 +105,9 @@ router.put("/:articleId", async (request, response) => {
     });
 
     if ("error" in result) {
-      return response.status(400).send(result);
+      return response
+        .status(result.status)
+        .send({ error: result.error, message: result.message });
     }
 
     return response.status(200).send({ article: result });

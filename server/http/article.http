@@ -4,6 +4,10 @@
 GET {{baseUrl}}/articles
 
 
+### Get All - Retornar todos os artigos
+GET {{baseUrl}}/687e2a9ebd674c47cbdb4fb4/articles
+
+
 ### Create - Criar artigos
 POST {{baseUrl}}/articles
 Content-Type: application/json
