@@ -1,31 +1,31 @@
 import { db } from "../../db/client";
 import type { ArticleSchema } from "../../types/article";
+import type { ErrorSchema } from "../../types/index";
 
-export async function upsertArticle({
-  id,
+export async function createArticle({
   content,
   photoUrl,
   title,
   userId,
-}: ArticleSchema): Promise<ArticleSchema | null> {
+}: ArticleSchema): Promise<ArticleSchema | ErrorSchema> {
   try {
-    /*
-     *    const article = await db.article.upsert({
-      where: {
-        id: id,
-      },
-      create: {
+    const userById = await db.user.findUnique({ where: { id: userId } });
+
+    if (userById && userById.role !== "WRITER") {
+      return {
+        error: true,
+        message:
+          "O usuário precisa ser da função 'WRITER' para escrever artigos",
+      };
+    }
+
+    const article = await db.article.create({
+      data: {
         content,
         photoUrl,
         title,
         userId,
         createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      update: {
-        content,
-        photoUrl,
-        title,
         updatedAt: new Date(),
       },
       select: {
@@ -39,9 +39,7 @@ export async function upsertArticle({
       },
     });
 
-
-     * */
-    //return article;
+    return article;
   } catch (error) {
     console.error("Error in upsertArticle:", error);
     throw error;

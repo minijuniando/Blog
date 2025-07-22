@@ -4,13 +4,11 @@
 GET {{baseUrl}}/articles
 
 
-### Create - Criar artigos
-POST {{baseUrl}}/articles
-Content-Type: application/json
+### Create - Criar artigos POST {{baseUrl}}/articles Content-Type: application/json
 
 {
   "userId": "687e2a9ebd674c47cbdb4fb4",
-  "title": "ta ligado papai 2",
+  "title": "A soberba de Pedro",
   "photoUrl": "",
   "content": "bom dia a todoss parte 2"
 }
@@ -19,11 +17,11 @@ Content-Type: application/json
 POST {{baseUrl}}/articles/
 
 ### Update - Atualizar artigos
-PUT {{baseUrl}}/articles/687f76f40d3c84484523c9b5
+PUT {{baseUrl}}/articles/687edcda6f31c5fc4e6a6687
 Content-Type: application/json
 
 {
-  "title": "new title holy shit my guy",
+  "title": "Pedro decidindo contra o Fluminense",
   "photoUrl": "",
-  "content": "bom dia a todoss leu me deu hahai salve bom dia"
+  "content": "Pedro calando todos no Maracanã"
 }
