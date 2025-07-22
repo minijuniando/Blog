@@ -3,3 +3,8 @@ export type ErrorSchema = {
   status: number;
   message: string;
 };
+
+export type LikeSchema = {
+  userId: string;
+  articleId: string;
+};
