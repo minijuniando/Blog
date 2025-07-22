@@ -4,7 +4,9 @@
 GET {{baseUrl}}/articles
 
 
-### Create - Criar artigos POST {{baseUrl}}/articles Content-Type: application/json
+### Create - Criar artigos
+POST {{baseUrl}}/articles
+Content-Type: application/json
 
 {
   "userId": "687e2a9ebd674c47cbdb4fb4",
@@ -14,14 +16,14 @@ GET {{baseUrl}}/articles
 }
 
 ### Delete - Deletar artigos
-POST {{baseUrl}}/articles/
+DELETE {{baseUrl}}/articles/687f9b9a2495917b7e51c723
 
 ### Update - Atualizar artigos
-PUT {{baseUrl}}/articles/687edcda6f31c5fc4e6a6687
+PUT {{baseUrl}}/articles/687f9b9a2495917b7e51c723
 Content-Type: application/json
 
 {
-  "title": "Pedro decidindo contra o Fluminense",
+  "title": "Flamengo sub-20 amassa o Leverkusen por 5 - 1",
   "photoUrl": "",
   "content": "Pedro calando todos no Maracanã"
 }

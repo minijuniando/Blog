@@ -19,6 +19,18 @@ export async function createArticle({
       };
     }
 
+    const articleByTitle = await db.article.findUnique({
+      where: {
+        title,
+      },
+    });
+
+    if (articleByTitle)
+      return {
+        error: true,
+        message: `O artigo com o titulo: ${title} já existe`,
+      };
+
     const article = await db.article.create({
       data: {
         content,

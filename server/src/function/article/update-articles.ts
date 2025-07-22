@@ -19,6 +19,17 @@ export async function updateArticle({
           "O usuário precisa ser da função 'WRITER' para escrever artigos",
       };
     }
+    const articleByTitle = await db.article.findUnique({
+      where: {
+        title,
+      },
+    });
+
+    if (articleByTitle)
+      return {
+        error: true,
+        message: `O artigo com o titulo: ${title} já existe`,
+      };
 
     const article = await db.article.update({
       where: {
