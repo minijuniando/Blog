@@ -1,12 +1,14 @@
 @baseUrl = http://localhost:3333
 
-### Get All - Retornar todos os artigos
+### Find All - Retornar todos os artigos
 GET {{baseUrl}}/articles
 
 
-### Get All - Retornar todos os artigos do determinado usuário
-GET {{baseUrl}}/687e2a9ebd674c47cbdb4fb4/articles
+### Find All By User - Retornar todos os artigos do determinado usuário
+GET {{baseUrl}}/articles/user/687e2a9ebd674c47cbdb4fb4
 
+### Find By Id - Retornar o artigo com o id da url TODO: criar essa rota pro artigo e pro user
+GET {{baseUrl}}/articles/687e2a9ebd674c47cbdb4fb4
 
 ### Create - Criar artigos
 POST {{baseUrl}}/articles

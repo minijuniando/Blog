@@ -11,8 +11,7 @@ app.use(express.json());
 
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
-//manipulei as rotas por lá
-app.use("/", articleRoutes);
+app.use("/articles", articleRoutes);
 
 app.get("/health", (_, response) => {
   return response.status(200).send("OK");
