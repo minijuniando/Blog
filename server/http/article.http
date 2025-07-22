@@ -12,7 +12,7 @@ Content-Type: application/json
   "userId": "687e2a9ebd674c47cbdb4fb4",
   "title": "A soberba de Pedro",
   "photoUrl": "",
-  "content": "bom dia a todoss parte 2"
+  "content": "E depois disso pedro calou o maracanã contra o Fluminense"
 }
 
 ### Delete - Deletar artigos
@@ -23,7 +23,7 @@ PUT {{baseUrl}}/articles/687f9b9a2495917b7e51c723
 Content-Type: application/json
 
 {
-  "title": "Flamengo sub-20 amassa o Leverkusen por 5 - 1",
+  "title": "Flamengo sub-20 amassa o Leverkusen PROFISSIONAL por 5 - 1",
   "photoUrl": "",
-  "content": "Pedro calando todos no Maracanã"
+  "content": "E olha que o Leverkusen ficou invicto ano passado"
 }

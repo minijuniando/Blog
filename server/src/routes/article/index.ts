@@ -1,10 +1,11 @@
-import { Router } from "express";
+import { request, Router } from "express";
 import { db } from "../../db/client";
 import { createArticle } from "../../function/article/create-article";
 import { deleteArticle } from "../../function/article/delete-article";
 import { getArticles } from "../../function/article/get-articles";
 import { updateArticle } from "../../function/article/update-articles";
 import type { ArticleSchema } from "../../types/article";
+import { getUserArticles } from "../../function/article/get-user-articles";
 
 const router = Router();
 
@@ -16,6 +17,17 @@ router.get("/", async (_, response) => {
     console.log(error);
     return response.status(500).send(error);
   }
+});
+
+router.get("/:userId/articles", async (request, response) => {
+  const { userId } = request.params;
+  const result = await getUserArticles(userId);
+
+  if ("error" in result) {
+    return response.status(404).send(result);
+  }
+
+  return response.status(200).send(result);
 });
 
 //TODO: CRIAR BUCKET PRA SALVAR IMAGEM
@@ -36,7 +48,7 @@ router.post("/", async (request, response) => {
       userId,
     });
     if ("error" in result) {
-      return response.status(400).send(result);
+      return response.status(result.status).send(result);
     }
 
     return response.status(201).send(result);
@@ -50,9 +62,6 @@ router.delete("/:articleId", async (request, response) => {
   try {
     const { articleId } = request.params;
     const deletedArticle = await deleteArticle(articleId);
-
-    if (!deletedArticle)
-      return response.status(400).send("This article not exists");
 
     return response.status(200).send({ success: true });
   } catch (error) {

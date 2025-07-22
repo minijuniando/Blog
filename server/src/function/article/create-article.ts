@@ -14,6 +14,7 @@ export async function createArticle({
     if (userById && userById.role !== "WRITER") {
       return {
         error: true,
+        status: 400,
         message:
           "O usuário precisa ser da função 'WRITER' para escrever artigos",
       };
@@ -28,6 +29,7 @@ export async function createArticle({
     if (articleByTitle)
       return {
         error: true,
+        status: 400,
         message: `O artigo com o titulo: ${title} já existe`,
       };
 
