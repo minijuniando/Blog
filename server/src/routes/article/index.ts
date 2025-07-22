@@ -1,8 +1,12 @@
 import { Router } from "express";
 import { createArticle } from "../../function/article/create-article";
+import { getArticles } from "../../function/article/get-articles";
 const router = Router();
 
-//router.get("/")
+router.get("/", async (request, response) => {
+  const articles = await getArticles();
+  return response.status(200).send(articles);
+});
 
 //TODO: CRIAR BUCKET PRA SALVAR IMAGEM
 router.post("/", async (request, response) => {
