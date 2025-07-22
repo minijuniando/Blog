@@ -1,12 +1,13 @@
 import { db } from "../../db/client";
 import type { ArticleSchema } from "../../types/article";
 
-export async function createArticle({
+export async function upsertArticle({
+  id,
   content,
   photoUrl,
   title,
   userId,
-}: ArticleSchema) {
+}: ArticleSchema): Promise<ArticleSchema | null> {
   try {
     const existingUserById = await db.user.findFirst({
       where: {
@@ -25,14 +26,23 @@ export async function createArticle({
     if (existingUserById.role !== "WRITER") return null;
     if (existingArticleByTitle) return null;
 
-    const article = await db.article.create({
-      data: {
+    const article = await db.article.upsert({
+      create: {
         content,
         photoUrl,
         title,
         userId,
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+      update: {
+        content,
+        photoUrl,
+        title,
+        updatedAt: new Date(),
+      },
+      where: {
+        id,
       },
     });
 

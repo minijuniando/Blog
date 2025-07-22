@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { createArticle } from "../../function/article/create-article";
-import { getArticles } from "../../function/article/get-articles";
+import { upsertArticle } from "../../function/article/create-article";
 import { deleteArticle } from "../../function/article/delete-article";
+import { getArticles } from "../../function/article/get-articles";
+import type { ArticleSchema } from "../../types/article";
+import { db } from "../../db/client";
+
 const router = Router();
 
 router.get("/", async (request, response) => {
@@ -55,6 +58,35 @@ router.delete("/:articleId", async (request, response) => {
   }
 });
 
-router.put();
+router.put("/:articleId", async (request, response) => {
+  const { articleId } = request.params;
+  if (!articleId)
+    return response.status(400).send("Missing articleId on request param");
+  const articleById = await db.article.findFirst({
+    where: {
+      id: articleId,
+    },
+  });
+
+  if (!articleById)
+    return response
+      .status(404)
+      .send(`Article with id: ${articleId} not founded`);
+
+  const { content, photoUrl, title }: ArticleSchema = request.body;
+  const { userId } = articleById;
+
+  const result = upsertArticle({
+    id: articleId,
+    content,
+    photoUrl,
+    title,
+    userId,
+  });
+
+  if (!result) return response.status(400).send("Deu erro aq");
+
+  return result;
+});
 
 export const articleRoutes = router;
