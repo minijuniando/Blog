@@ -9,7 +9,7 @@ POST {{baseUrl}}/articles
 Content-Type: application/json
 
 {
-  "userId": "",
+  "userId": "687e2a9ebd674c47cbdb4fb4",
   "title": "Salve",
   "photoUrl": "",
   "content": "bom dia a todoss"
