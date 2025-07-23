@@ -1,4 +1,3 @@
-import { response } from "express";
 import { db } from "../../db/client";
 import type { ErrorSchema, InterationSchema } from "../../types";
 
