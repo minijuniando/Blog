@@ -18,7 +18,7 @@ export async function deleteLike(
 				message: "Esse artigo não tem like!",
 			};
 
-		await db.like.findUnique({
+		await db.like.delete({
 			where: {
 				id: likeId,
 			},
