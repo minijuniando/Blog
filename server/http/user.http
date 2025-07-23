@@ -5,8 +5,8 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "username": "viniciusarruda",
-    "email":  "albuquerquearrudavinicius@gmail.com",
+    "username": "testuser",
+    "email":  "allyssonarruda@gmail.com",
     "password": "senhamuitoforte",
     "confirmPassword": "senhamuitoforte",
     "role": "WRITER"

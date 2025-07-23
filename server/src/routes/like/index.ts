@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { createLike } from "../../function/like/create-like";
 import { deleteLike } from "../../function/like/delete-like";
-import { success } from "zod";
+import { validateUser } from "../../middleware/auth";
 
 const router = Router();
+
+router.use(validateUser);
 
 router.post("/:userId/likes/:articleId", async (request, response) => {
 	const { userId, articleId } = request.params;

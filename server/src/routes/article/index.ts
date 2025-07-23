@@ -6,6 +6,7 @@ import { getArticles } from "../../function/article/get-articles";
 import { getUserArticles } from "../../function/article/get-user-articles";
 import { updateArticle } from "../../function/article/update-articles";
 import type { ArticleSchema } from "../../types/article";
+import { validateUser } from "../../middleware/auth";
 
 const router = Router();
 
@@ -21,7 +22,10 @@ router.get("/articles", async (_, response) => {
 	}
 });
 
+router.use(validateUser);
+
 router.get("/:userId/articles", async (request, response) => {
+	console.log(request.user);
 	const { userId } = request.params;
 	const result = await getUserArticles(userId);
 
@@ -31,6 +35,7 @@ router.get("/:userId/articles", async (request, response) => {
 			.send({ error: result.error, message: result.message });
 	}
 
+	return response.status(200).send(request.user);
 	return response.status(200).send(result);
 });
 
