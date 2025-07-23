@@ -1,9 +1,9 @@
 import express from "express";
 import { env } from "./common/env";
 import { articleRoutes } from "./routes/article";
+import { likeRoutes } from "./routes/like";
 import { loginRoute } from "./routes/user/login";
 import { signupRoute } from "./routes/user/signup";
-import { likeRoutes } from "./routes/like";
 import { viewRoute } from "./routes/views";
 
 export const app = express();
@@ -15,7 +15,7 @@ app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
 app.use(articleRoutes);
 app.use(likeRoutes);
-app.use("/views", viewRoute);
+app.use(viewRoute);
 
 app.get("/health", (_, response) => {
 	return response.status(200).send("OK");

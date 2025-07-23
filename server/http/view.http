@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:3333
+
+### Create view - /:userId/views/:articleId
+POST {{baseUrl}}/687e4cc53ca51f7a3cac0663/views/687f9a580df30e0a6aa8f5a7
+
