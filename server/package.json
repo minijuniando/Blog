@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx --env-file .env --watch src/server.ts",
     "build": "tsup src/server.ts --out-dir dist",
-    "start": "node --env-file .env dist/server.js"
+    "start": "node --env-file .env dist/server.js",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -17,12 +18,23 @@
     "chalk": "^5.4.1",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@biomejs/biome": "^2.1.1",
+    "@prisma/client": "^6.12.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/nodemailer": "^6.4.17",
+    "bcrypt": "^6.0.0",
     "envalid": "^8.1.0",
     "express": "^5.1.0",
-    "mongoose": "^8.16.3"
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.17.0",
+    "nodemailer": "^7.0.5",
+    "prisma": "^6.12.0",
+    "zod": "^4.0.5"
   }
 }

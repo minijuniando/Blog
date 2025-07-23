@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  email     String    @unique
+  photoUrl String?
+  password  String
+  role UserRole
+  articles  Article[]
+  likes     Like[]
+  views     View[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  READER
+  WRITER
+  ADMIN
+}
+
+model Article {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String        @db.ObjectId
+  photoUrl  String
+  title     String        @unique
+  content   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  likes     Like[]
+  views     View[]
+  tags      ArticleTags[]
+  user      User          @relation(fields: [userId], references: [id])
+
+  @@map("articles")
+}
+
+model Tag {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  name     String        @unique
+  articles ArticleTags[]
+
+  @@map("tags")
+}
+
+model ArticleTags {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  articleId String  @db.ObjectId
+  tagId     String  @db.ObjectId
+  article   Article @relation(fields: [articleId], references: [id])
+  tag       Tag     @relation(fields: [tagId], references: [id])
+
+  @@unique([articleId, tagId])
+  @@map("article_tags")
+}
+
+model Like {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  articleId String  @db.ObjectId
+  article   Article @relation(fields: [articleId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, articleId])
+  @@map("likes")
+}
+
+model View {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  articleId String  @db.ObjectId
+  article   Article @relation(fields: [articleId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, articleId])
+  @@map("views")
+}

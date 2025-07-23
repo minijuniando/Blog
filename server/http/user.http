@@ -1,0 +1,31 @@
+@baseUrl = http://localhost:3333
+
+### Signup - Enviar código de verificação
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+    "username": "victor",
+    "email":  "victorarruda1508@gmail.com",
+    "password": "salvesalve",
+    "confirmPassword": "salvesalve",
+    "role": "WRITER"
+}
+
+### Signup - Criar usuário
+POST {{baseUrl}}/signup/7410
+Content-Type: application/json
+
+{
+  "email": "victorarruda1508@gmail.com"
+}
+
+### Login - Logar Usuário
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "victorarruda1508@gmail.com",
+  "password": "salvesalve"
+}
+
