@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import type { ErrorSchema } from "../../types";
+import { env } from "../../common/env";
 import { db } from "../../db/client";
+import type { ErrorSchema } from "../../types";
 
 export async function login({
 	email,
@@ -19,9 +20,10 @@ export async function login({
 	const hashedPassword = user.password;
 	const comparedPassword = await bcrypt.compare(password, hashedPassword);
 
-	if (!comparedPassword) return response.status(400).send("Senha inválida");
+	if (!comparedPassword)
+		return { error: true, status: 400, message: "Senha inválida" };
 
 	const token = jwt.sign({ id: user.id, email: user.email }, env.TOKEN_SECRET);
 
-	return response.json({ token });
+	return { token };
 }
