@@ -1,8 +1,9 @@
 import { db } from "../../db/client";
+import type { ErrorSchema } from "../../types";
 import type { ArticleSchema } from "../../types/article";
-import type { ErrorSchema } from "../../types/index";
 
-export async function createArticle({
+export async function updateArticle({
+  id,
   content,
   photoUrl,
   title,
@@ -19,7 +20,6 @@ export async function createArticle({
           "O usuário precisa ser da função 'WRITER' para escrever artigos",
       };
     }
-
     const articleByTitle = await db.article.findUnique({
       where: {
         title,
@@ -33,7 +33,10 @@ export async function createArticle({
         message: `O artigo com o titulo: ${title} já existe`,
       };
 
-    const article = await db.article.create({
+    const article = await db.article.update({
+      where: {
+        id,
+      },
       data: {
         content,
         photoUrl,

@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:3333
+
+### Find All - Retornar todos os artigos
+GET {{baseUrl}}/articles
+
+
+### Find All By User - Retornar todos os artigos do determinado usuário
+GET {{baseUrl}}/articles/user/687e2a9ebd674c47cbdb4fb4
+
+### Find By Id - Retornar o artigo com o id da url TODO: criar essa rota pro artigo e pro user
+GET {{baseUrl}}/articles/687e2a9ebd674c47cbdb4fb4
+
+### Create - Criar artigos
+POST {{baseUrl}}/articles
+Content-Type: application/json
+
+{
+  "userId": "687e2a9ebd674c47cbdb4fb4",
+  "title": "A soberba de Pedro",
+  "photoUrl": "",
+  "content": "E depois disso pedro calou o maracanã contra o Fluminense"
+}
+
+### Delete - Deletar artigos
+DELETE {{baseUrl}}/articles/687f9b9a2495917b7e51c723
+
+### Update - Atualizar artigos
+PUT {{baseUrl}}/articles/687f9b9a2495917b7e51c723
+Content-Type: application/json
+
+{
+  "title": "Flamengo sub-20 amassa o Leverkusen PROFISSIONAL por 5 - 1",
+  "photoUrl": "",
+  "content": "E olha que o Leverkusen ficou invicto ano passado"
+}
