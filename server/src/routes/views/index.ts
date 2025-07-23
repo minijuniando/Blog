@@ -12,7 +12,7 @@ router.post("/:userId/views/:articleId", async (request, response) => {
 			.status(result.status)
 			.send({ error: result.error, message: result.message });
 
-	return response.status(201).send(response);
+	return response.status(201).send(result);
 });
 
 export const viewRoute = router;
