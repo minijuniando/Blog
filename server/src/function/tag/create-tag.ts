@@ -1,7 +1,5 @@
 import { db } from "../../db/client";
-import type { ErrorSchema } from "../../types";
-
-type TagSchema = { id: string; name: string };
+import type { ErrorSchema, TagSchema } from "../../types";
 
 export async function createTag(
   name: string,
@@ -11,7 +9,7 @@ export async function createTag(
       name,
     },
   });
-  if (!tagByName || tagByName.name.toLowerCase().trim() === name)
+  if (tagByName)
     return { error: true, status: 400, message: "Essa tag já existe" };
 
   const tag = await db.tag.create({
