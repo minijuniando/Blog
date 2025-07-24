@@ -3,6 +3,7 @@ import { createTag } from "../../function/tag/create-tag";
 import { getTags } from "../../function/tag/get-tags";
 import { validateUser } from "../../middleware/auth";
 import { updateTag } from "../../function/tag/update-tag";
+import { deleteTag } from "../../function/tag/delete-tag";
 
 const router = Router();
 
@@ -49,9 +50,9 @@ router.put("/:tagId", async (request, response) => {
 router.delete("/:tagId", async (request, response) => {
   const { tagId } = request.params;
 
-  const result = await createTag(name);
+  const result = await deleteTag(tagId);
 
-  if ("error" in result)
+  if (typeof result === "object")
     return response
       .status(result.status)
       .send({ error: result.error, message: result.message });
