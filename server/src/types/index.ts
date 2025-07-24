@@ -10,3 +10,10 @@ export type InterationSchema = {
 };
 
 export type TagSchema = { id: string; name: string };
+
+export type GithubUserData = {
+  id: unknown;
+  name: string;
+  email: string;
+  avatar_url: string;
+};
