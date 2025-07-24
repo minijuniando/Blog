@@ -11,4 +11,6 @@ export const env = cleanEnv(process.env, {
     example:
       "tem que ir nas config do google, criar uma senha de app e colar no .env, pesquisa no youtube q é fácil",
   }),
+  GITHUB_CLIENT_ID: str({ example: "Pede pro allysson que ele tem" }),
+  GITHUB_CLIENT_SECRET: str({ example: "Pede pro allysson que ele tem" }),
 });
