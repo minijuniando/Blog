@@ -11,6 +11,7 @@ export async function oauthGithub(code: string): Promise<void | ErrorSchema> {
       body: JSON.stringify({
         client_id: env.GITHUB_CLIENT_ID,
         client_secret: env.GITHUB_CLIENT_SECRET,
+        code,
       }),
     });
     const { access_token: accessToken } = await accessTokenRoute.json();
@@ -47,6 +48,14 @@ export async function oauthGithub(code: string): Promise<void | ErrorSchema> {
       email,
       name,
     }: GithubUserData = githubUserData;
+
+    if (!email)
+      return {
+        error: true,
+        status: 400,
+        message:
+          "O email do usuário não está público no Github, preciso dele pra autenticar",
+      };
 
     console.log(githubId);
   } catch (error) {
