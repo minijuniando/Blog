@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function SignIn() {
 	return (
@@ -10,7 +11,7 @@ export default function SignIn() {
 					<Image
 						src="/devs.jpg"
 						alt="Imagem devs trabalhando em uma mesa"
-						className="rounded-3xl object-cover"
+						className="object-cover md:rounded-3xl"
 						fill
 					/>
 				</div>
@@ -29,14 +30,14 @@ export default function SignIn() {
 						<Input
 							type="email"
 							name="email"
-							className="bg-blue-secondary border-blue-third mt-3 mb-5 h-12 border-2"
+							className="bg-blue-secondary border-blue-third mt-3 mb-5 h-12 border-2 focus:border-none"
 						/>
 
 						<label htmlFor="password">Senha</label>
 						<Input
 							type="password"
 							name="password"
-							className="bg-blue-secondary border-blue-third mt-3 mb-5 h-12 border-2"
+							className="bg-blue-secondary border-blue-third mt-3 mb-5 h-12 border-2 focus:border-none"
 						/>
 						<Button type="submit" className="bg-blue-third h-12 w-full">
 							Entrar
@@ -48,23 +49,42 @@ export default function SignIn() {
 						<div className="relative w-full border border-white"></div>
 					</div>
 
-					<Button
-						type="submit"
-						className="border-blue-third text-blue-third h-12 w-full border bg-white font-bold"
-					>
-						<Image
-							src="/google-icon.svg"
-							alt="Google icon"
-							width={14}
-							height={14}
-						/>
-						Google
-					</Button>
-					<div className="text-center text-xs">
+					<div className="relative flex w-full gap-1.5">
+						<Button
+							type="submit"
+							className="border-blue-third text-blue-third h-12 w-full flex-1 border bg-white font-bold"
+						>
+							<Image
+								src="/google-icon.svg"
+								alt="Google icon"
+								width={14}
+								height={14}
+							/>
+							Google
+						</Button>
+
+						<Button
+							type="submit"
+							className="border-blue-third text-blue-third h-12 w-full flex-1 border bg-white font-bold"
+						>
+							<Image
+								src="/github-icon.svg"
+								alt="Github icon"
+								width={14}
+								height={14}
+							/>
+							Github
+						</Button>
+					</div>
+
+					<div className="text-center">
 						<p>Não possui uma conta?</p>
-						<a href="#" className="text-blue-third font-bold underline">
+						<Link
+							href="/signup"
+							className="text-blue-third font-bold underline"
+						>
 							Cadastre-se aqui
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
