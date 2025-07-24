@@ -24,8 +24,15 @@ export default function SignIn() {
 							objectFit="cover"
 						/>
 					</div>
-					<p>Faça seu login para continuar</p>
+					<p>Crie seu cadastro para continuar</p>
 					<form action="" className="w-full">
+						<label htmlFor="nome">Nome</label>
+						<Input
+							type="text"
+							name="name"
+							className="bg-blue-secondary border-blue-third mt-3 mb-5 h-12 border-2 focus:border-none"
+						/>
+
 						<label htmlFor="email">Email</label>
 						<Input
 							type="email"
@@ -40,50 +47,17 @@ export default function SignIn() {
 							className="bg-blue-secondary border-blue-third mt-3 mb-5 h-12 border-2 focus:border-none"
 						/>
 						<Button type="submit" className="bg-blue-third h-12 w-full">
-							Entrar
+							Cadastrar
 						</Button>
 					</form>
-					<div className="relative flex w-full items-center gap-2">
-						<div className="relative w-full border border-white"></div>
-						<p>ou</p>
-						<div className="relative w-full border border-white"></div>
-					</div>
-
-					<div className="relative flex w-full gap-1.5">
-						<Button
-							type="submit"
-							className="border-blue-third text-blue-third h-12 w-full flex-1 border bg-white font-bold"
-						>
-							<Image
-								src="/google-icon.svg"
-								alt="Google icon"
-								width={14}
-								height={14}
-							/>
-							Google
-						</Button>
-
-						<Button
-							type="submit"
-							className="border-blue-third text-blue-third h-12 w-full flex-1 border bg-white font-bold"
-						>
-							<Image
-								src="/github-icon.svg"
-								alt="Github icon"
-								width={14}
-								height={14}
-							/>
-							Github
-						</Button>
-					</div>
 
 					<div className="text-center">
-						<p>Não possui uma conta?</p>
+						<p>Já tem uma conta?</p>
 						<Link
-							href="/signup"
+							href="/signin"
 							className="text-blue-third font-bold underline"
 						>
-							Cadastre-se aqui
+							Faça seu login aqui
 						</Link>
 					</div>
 				</div>
