@@ -5,13 +5,14 @@ GET {{baseUrl}}/articles
 
 
 ### Find All By User - Retornar todos os artigos do determinado usuário
-GET {{baseUrl}}/articles/user/687e2a9ebd674c47cbdb4fb4
+GET {{baseUrl}}/687e2a9ebd674c47cbdb4fb4/articles
 
 ### Find By Id - Retornar o artigo com o id da url TODO: criar essa rota pro artigo e pro user
 GET {{baseUrl}}/articles/687e2a9ebd674c47cbdb4fb4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODdlMmE5ZWJkNjc0YzQ3Y2JkYjRmYjQiLCJpYXQiOjE2NzgwODgwMDAsImV4cCI6MTY3ODE3NDQwMH0
 
 ### Create - Criar artigos
-POST {{baseUrl}}/articles
+POST {{baseUrl}}/articles/
 Content-Type: application/json
 
 {
