@@ -1,62 +1,81 @@
 import Image from 'next/image'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import CardPost from './components/CardPost'
+import Aside from './components/Aside'
+import TabNav from './components/TabNav'
+
+const fakeLatestPosts = Array.from({ length: 6 }).map((_, i) => ({
+	author: { name: 'Jane Doe', avatar: '/profile.jpg' },
+	timeAgo: 'há 5 horas',
+	postImage: '/post-banner.jpg',
+	title: `Post mais recente #${i + 1}`,
+	description:
+		'Descrição fictícia para o post mais recente.Mussum Ipsum, cacilds vidis litro abertis.  Mé faiz elementum girarzis, nisi eros vermeio. Cevadis im ampola pa arma uma pindureta. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Suco de cevadiss deixa as pessoas mais interessantis.',
+	views: '587',
+	likes: '1.5 mil',
+}))
+
+const fakeMostViewedPosts = Array.from({ length: 6 }).map((_, i) => ({
+	author: { name: 'John Doe', avatar: '/profile.jpg' },
+	timeAgo: 'há 2 dias',
+	postImage: '/post-banner.jpg',
+	title: `Post mais visualizado #${i + 1}`,
+	description:
+		'Descrição fictícia para o post mais visualizado. Mussum Ipsum, cacilds vidis litro abertis.  Mé faiz elementum girarzis, nisi eros vermeio. Cevadis im ampola pa arma uma pindureta. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Suco de cevadiss deixa as pessoas mais interessantis.',
+	views: '2.3 mil',
+	likes: '3 mil',
+}))
 
 export default function Home() {
 	return (
 		<>
-			<div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 px-8 pt-12 pb-20 font-sans sm:p-20">
-				<Header />
-				<main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-					<Image
-						className="dark:invert"
-						src="/next.svg"
-						alt="Next.js logo"
-						width={180}
-						height={38}
-						priority
-					/>
-					<ol className="list-inside list-decimal text-center font-mono text-sm/6 sm:text-left">
-						<li className="mb-2 tracking-[-.01em]">
-							Get started by editing{' '}
-							<code className="rounded bg-black/[.05] px-1 py-0.5 font-mono font-semibold dark:bg-white/[.06]">
-								src/app/page.tsx
-							</code>
-							.
-						</li>
-						<li className="tracking-[-.01em]">
-							Save and see your changes instantly.
-						</li>
-					</ol>
+			<div className="flex h-full w-full flex-col">
+				<div className="flex flex-col items-center px-8 pt-8 pb-20 sm:pt-6">
+					<Header />
 
-					<div className="flex flex-col items-center gap-4 sm:flex-row">
-						<a
-							className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-							href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<Image
-								className="dark:invert"
-								src="/vercel.svg"
-								alt="Vercel logomark"
-								width={20}
-								height={20}
-							/>
-							Deploy now
-						</a>
-						<a
-							className="flex h-10 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:w-auto sm:px-5 sm:text-base md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-							href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Read our docs
-						</a>
-					</div>
-				</main>
+					<section className="relative mt-8 h-[188px] max-h-[577px] w-full max-w-5xl overflow-hidden rounded-4xl sm:h-[420px] sm:rounded-[50px] md:mt-10 md:h-[466px] xl:h-[577px]">
+						<Image
+							src="/banner.jpg"
+							alt="Banner"
+							fill
+							className="object-cover"
+							priority
+						/>
+						<div className="absolute inset-0 bg-black/50" />
+						<div className="relative z-10 flex h-full w-full flex-col justify-end gap-2.5 px-5 py-5 sm:gap-4 sm:px-14 sm:py-20 md:px-12 md:py-16">
+							<h1 className="text-base font-bold text-white sm:text-4xl">
+								Pixel Perfect - A jornada pelo layout útopico
+							</h1>
+							<div className="flex flex-row items-center gap-4 text-xs text-white sm:text-base">
+								<span>Jane Doe</span>
+								<span className="font-bold text-[#0565FF]">|</span>
+								<span>há 5 horas</span>
+							</div>
+						</div>
+					</section>
+					<section className="mt-28 flex max-w-5xl gap-7">
+						<TabNav
+							latestPosts={
+								<div className="flex w-full flex-col gap-7">
+									{fakeLatestPosts.map((post, idx) => (
+										<CardPost key={idx} {...post} />
+									))}
+								</div>
+							}
+							mostViewedPosts={
+								<div className="flex w-full flex-col gap-7">
+									{fakeMostViewedPosts.map((post, idx) => (
+										<CardPost key={idx} {...post} />
+									))}
+								</div>
+							}
+						/>
+						<Aside />
+					</section>
+				</div>
+				<Footer />
 			</div>
-			<Footer />
 		</>
 	)
 }

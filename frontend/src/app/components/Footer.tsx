@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function Footer() {
 	return (
-		<footer className="relative flex w-full items-center justify-center overflow-hidden bg-black py-14">
+		<footer className="relative flex h-max w-full items-center justify-center bg-black py-14">
 			<Image
 				src="/detail-footer.svg"
 				alt="Detalhe decorativo"
@@ -19,7 +19,7 @@ export default function Footer() {
 					alt="Logo Juniando"
 					width={45}
 					height={37}
-					className="mb-[27px]"
+					className="mb-7"
 				/>
 				<div className="mb-2 flex gap-1">
 					<span className="text-sm text-white">Feito com</span>
