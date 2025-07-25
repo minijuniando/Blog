@@ -4,4 +4,5 @@ export type ArticleSchema = {
   photoUrl: string;
   title: string;
   content: string;
+  tagIds?: string[];
 };

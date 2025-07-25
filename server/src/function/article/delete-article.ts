@@ -14,6 +14,12 @@ export async function deleteArticle(
     if (!articleById)
       return { error: true, status: 400, message: "Esse artigo não existe" };
 
+    await db.articleTags.deleteMany({
+      where: {
+        articleId: articleId,
+      },
+    });
+
     await db.article.delete({
       where: {
         id: articleId,
