@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3333
+
+### Like Article - /:userId/likes/:articleId
+POST {{baseUrl}}/687e4cc53ca51f7a3cac0663/likes/687f9a580df30e0a6aa8f5a7
+
+### Delete Article - /likes/:likeId
+DELETE {{baseUrl}}/likes/6880dcc0b77fff7f5fddce15
