@@ -1,0 +1,7 @@
+connection: keep-alive
+content-length: 82
+content-type: application/json; charset=utf-8
+date: Tue, 22 Jul 2025 12:10:56 GMT
+etag: W/"52-qBpYBxbBcJEz4IJxnKqqd/yrgSY"
+keep-alive: timeout=5
+x-powered-by: Express
