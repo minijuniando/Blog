@@ -1,6 +1,6 @@
 import { db } from "../../db/client";
 import type { ArticleSchema } from "../../types/article";
-import type { ErrorSchema } from "../../types/index";
+import type { ErrorSchema, TagSchema } from "../../types/index";
 
 export async function createArticle({
   content,
@@ -72,7 +72,7 @@ export async function createArticle({
 
     if (tagIds && tagIds.length > 0) {
       await db.articleTags.createMany({
-        data: tagIds.map((tagId) => ({
+        data: tagIds.map((tagId: string) => ({
           articleId: article.id,
           tagId: tagId,
         })),

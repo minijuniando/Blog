@@ -28,14 +28,15 @@ export async function loginByOauth0(
           client_id: env.OAUTH0_CLIENT_ID,
           client_secret: env.OAUTH0_CLIENT_SECRET,
           code,
-          redirect_uri: "http://localhost:3000/callback",
+          redirect_uri: "http://localhost:3000/oauth",
         }),
       },
     );
 
     const tokenData = await tokenResponse.json();
+    const { access_token: accessToken } = tokenData;
 
-    if (!tokenData.access_token) {
+    if (!accessToken) {
       console.error("Auth0 Token Error:", tokenData);
       return {
         error: true,
@@ -44,17 +45,14 @@ export async function loginByOauth0(
       };
     }
 
-    const { access_token: accessToken } = tokenData;
-
-    // Etapa 2: Usar o Access Token para buscar informações do perfil do usuário
     const userResponse = await fetch(`https://${env.OAUTH0_DOMAIN}/userinfo`, {
       headers: {
+        Accept: "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
     });
 
-    const userData: Auth0UserData = await userResponse.json();
-
+    const userData = await userResponse.json();
     if (!userData) {
       console.error("Auth0 UserInfo Error:", await userResponse.text());
       return {
@@ -64,7 +62,12 @@ export async function loginByOauth0(
       };
     }
 
-    const { name, email, picture, sub: auth0Id } = userData;
+    const {
+      sub: auth0Id,
+      email,
+      nickname: username,
+      picture: photoUrl,
+    }: Auth0UserData = userData;
 
     if (!email) {
       return {
@@ -75,26 +78,19 @@ export async function loginByOauth0(
       };
     }
 
-    console.log("Dados do usuário recebidos da Auth0:", {
-      auth0Id,
-      name,
-      email,
-      picture,
-    });
-
     const upsertUser = await db.user.upsert({
       where: {
         email,
       },
       update: {
-        oauthOId: auth0Id,
+        authOId: auth0Id,
       },
       create: {
-        oauthOId: auth0Id,
+        authOId: auth0Id,
         role: "READER",
-        username: name,
+        username,
         email,
-        photoUrl: picture,
+        photoUrl,
       },
     });
 

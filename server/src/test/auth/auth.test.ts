@@ -66,7 +66,7 @@ describe("Middleware: validateUser", (): void => {
     await validateUser(req, res, next);
 
     expect(next).toHaveBeenCalled();
-    expect((req as any).user).toEqual(userPayload); //VOU TIRAR ISSO DEPOIS SE NÃO FOR PRECISO NA ROTA
+    expect((req as any).user).toEqual(userPayload);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.send).not.toHaveBeenCalled();
   });

@@ -1,7 +1,6 @@
 @baseUrl = http://localhost:3000
-@apiGithubUrl = https://api.github.com
-
-GET {{apiGithubUrl}}/user
 
 ### Rota de callback do Github
 GET {{baseUrl}}/callback/salve23
+
+

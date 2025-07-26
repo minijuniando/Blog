@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { createTag } from "../../function/tag/create-tag";
-import { getTags } from "../../function/tag/get-tags";
-import { validateUser } from "../../middleware/auth";
-import { updateTag } from "../../function/tag/update-tag";
 import { deleteTag } from "../../function/tag/delete-tag";
+import { getTags } from "../../function/tag/get-tags";
+import { updateTag } from "../../function/tag/update-tag";
+import { validateUser } from "../../middleware/auth";
 
 const router = Router();
 

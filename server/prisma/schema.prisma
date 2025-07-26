@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  oauthOId String @unique //depende do tipo do oauthOId, vou olhar isso
+  authOId String? @unique
   username String @unique
   email     String    @unique
   photoUrl String?
