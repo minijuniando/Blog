@@ -12,12 +12,12 @@ export async function createArticle({
   try {
     const userById = await db.user.findUnique({ where: { id: userId } });
 
-    if (userById && userById.role !== "WRITER") {
+    if (userById && userById.role !== "READER") {
       return {
         error: true,
         status: 400,
         message:
-          "O usuário precisa ser da função 'WRITER' para escrever artigos",
+          "O usuário precisa ser da função 'WRITER' ou 'ADMIN' para escrever artigos",
       };
     }
 
