@@ -22,6 +22,18 @@ export async function getUserArticles(
     where: {
       userId,
     },
+    include: {
+      tags: {
+        select: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   return userArticles;

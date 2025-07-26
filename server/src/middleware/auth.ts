@@ -19,7 +19,7 @@ export async function validateUser(
     (err: VerifyErrors | null, user: string | JwtPayload | undefined) => {
       console.log(err);
       if (err || !user) return response.status(403).send(err);
-      (request as any).user = user; //ainda não usei isso, mas era daora pra n ter q ficar mandando o id do usuário direto
+      (request as any).user = user;
       next();
     },
   );
