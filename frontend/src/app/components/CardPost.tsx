@@ -44,7 +44,9 @@ export default function CardPost({
 						height={40}
 						className="h-8 w-8 rounded-full border-2 border-[#CDCDCD] object-cover"
 					/>
-					<span className="text-base text-black">{author.name}</span>
+					<span className="text-base font-normal text-black">
+						{author.name}
+					</span>
 				</div>
 				<div className="flex items-center gap-1.5 text-[#6b6b6b]">
 					<MdAccessTime size={18} />
@@ -63,8 +65,10 @@ export default function CardPost({
 					/>
 				</div>
 				<div className="flex flex-1 flex-col justify-between">
-					<h2 className="mb-2.5 text-2xl font-bold text-black">{title}</h2>
-					<p className="mb-2.5 line-clamp-3 text-base text-[#6b6b6b]">
+					<h2 className="mb-2.5 text-xl font-bold text-black md:text-2xl">
+						{title}
+					</h2>
+					<p className="mb-4 line-clamp-3 text-xs font-normal text-[#6b6b6b] md:text-base">
 						{description}
 					</p>
 					<div className="flex items-center justify-between">
@@ -78,7 +82,7 @@ export default function CardPost({
 								<span>{likes}</span>
 							</div>
 						</div>
-						<div className="flex items-center gap-1.5 text-base font-medium text-[#0565FF]">
+						<div className="flex items-center gap-1.5 text-xs font-medium text-[#0565FF] md:text-base">
 							<span>ver mais</span>
 							<MdArrowForward size={18} />
 						</div>
