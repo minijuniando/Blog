@@ -56,7 +56,7 @@ export default function Home() {
 							</div>
 						</div>
 					</section>
-					<section className="mt-28 flex max-w-5xl gap-7">
+					<section className="mt-14 flex max-w-5xl gap-0 md:mt-28 md:gap-7">
 						<div className="flex w-full flex-col gap-8 lg:w-[70%]">
 							<TabNav
 								latestPosts={
@@ -76,12 +76,12 @@ export default function Home() {
 							/>
 							<Link
 								href="/posts"
-								className="mt-4 self-center rounded-full border-2 border-black bg-transparent px-8 py-4 text-base font-bold transition hover:bg-black hover:text-white"
+								className="mt-4 self-center rounded-full border-2 border-black bg-transparent px-8 py-3.5 text-sm font-bold transition hover:bg-black hover:text-white md:py-4 md:text-base"
 							>
 								Ver mais
 							</Link>
 						</div>
-						<div className="mt-[90px] w-[30%]">
+						<div className="mt-[90px] hidden w-[30%] lg:flex">
 							<Aside />
 						</div>
 					</section>
