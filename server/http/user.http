@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:3000
+
+### Signup - Enviar código de verificação
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "email":  "allyssonarruda@gmail.com",
+    "password": "senhamuitoforte",
+    "confirmPassword": "senhamuitoforte",
+    "role": "WRITER"
+}
+
+### Signup - Criar usuário
+POST {{baseUrl}}/signup/7410
+Content-Type: application/json
+
+{
+  "email": "victorarruda1508@gmail.com"
+}
+
+### Login - Logar Usuário
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "victorarruda1508@gmail.com",
+  "password": "salvesalve"
+}
+
+### Update User
+PUT {{baseUrl}}/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODM3YzBhYTI1NmI0ZGY1ODllNDZlMyIsImVtYWlsIjoiYWxicS52aWN0b3JAZ21haWwuY29tIiwiaWF0IjoxNzUzNDQ3NjQyfQ.4oD5E_jIrdaj26iOiUWmS6YdW8x7GBD-H9i4iKTicoI
+
+### Change User Role - /users/:targetid/role
+### targetid = id do user que sofrerá a mudança de role
+PUT {{baseUrl}}/users/targetid/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODM3YzBhYTI1NmI0ZGY1ODllNDZlMyIsImVtYWlsIjoiYWxicS52aWN0b3JAZ21haWwuY29tIiwiaWF0IjoxNzUzNDQ3NjQyfQ.4oD5E_jIrdaj26iOiUWmS6YdW8x7GBD-H9i4iKTicoI

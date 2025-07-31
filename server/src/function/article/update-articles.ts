@@ -1,8 +1,9 @@
 import { db } from "../../db/client";
+import type { ErrorSchema } from "../../types";
 import type { ArticleSchema } from "../../types/article";
-import type { ErrorSchema, TagSchema } from "../../types/index";
 
-export async function createArticle({
+export async function updateArticle({
+  id,
   content,
   photoUrl,
   title,
@@ -12,27 +13,29 @@ export async function createArticle({
   try {
     const userById = await db.user.findUnique({ where: { id: userId } });
 
-    if (userById && userById.role !== "READER") {
+    if (userById && userById.role !== "WRITER") {
       return {
         error: true,
         status: 400,
         message:
-          "O usuário precisa ser da função 'WRITER' ou 'ADMIN' para escrever artigos",
+          "O usuário precisa ser da função 'WRITER' para escrever artigos",
       };
     }
 
-    const articleByTitle = await db.article.findUnique({
-      where: {
-        title,
-      },
-    });
+    if (title) {
+      const articleByTitle = await db.article.findUnique({
+        where: {
+          title,
+        },
+      });
 
-    if (articleByTitle)
-      return {
-        error: true,
-        status: 400,
-        message: `O artigo com o titulo: ${title} já existe`,
-      };
+      if (articleByTitle && articleByTitle.id !== id)
+        return {
+          error: true,
+          status: 400,
+          message: `O artigo com o titulo: ${title} já existe`,
+        };
+    }
 
     if (tagIds && tagIds.length > 0) {
       const existingTags = await db.tag.findMany({
@@ -50,14 +53,31 @@ export async function createArticle({
           message: "Uma ou mais tags não foram encontradas",
         };
       }
+
+      await db.articleTags.deleteMany({
+        where: {
+          articleId: id,
+        },
+      });
+
+      await db.articleTags.createMany({
+        data: tagIds.map((tagId) => ({
+          articleId: id as string,
+          tagId,
+        })),
+      });
     }
 
-    const article = await db.article.create({
+    const article = await db.article.update({
+      where: {
+        id,
+      },
       data: {
         content,
         photoUrl,
         title,
         userId,
+        updatedAt: new Date(),
       },
       select: {
         id: true,
@@ -71,16 +91,22 @@ export async function createArticle({
     });
 
     if (tagIds && tagIds.length > 0) {
+      await db.articleTags.deleteMany({
+        where: {
+          articleId: id,
+        },
+      });
+
       await db.articleTags.createMany({
-        data: tagIds.map((tagId: string) => ({
-          articleId: article.id,
-          tagId: tagId,
+        data: tagIds.map((tagId) => ({
+          articleId: id as string,
+          tagId,
         })),
       });
     }
 
-    const createdArticleWithTags = await db.article.findUnique({
-      where: { id: article.id },
+    const updatedArticleWithTags = await db.article.findUnique({
+      where: { id: id },
       select: {
         id: true,
         userId: true,
@@ -102,9 +128,9 @@ export async function createArticle({
       },
     });
 
-    return createdArticleWithTags as ArticleSchema;
+    return updatedArticleWithTags as ArticleSchema;
   } catch (error) {
-    console.error("Error in upsertArticle:", error);
+    console.error("Error in updateArticle:", error);
     throw error;
   }
 }
