@@ -4,6 +4,8 @@ import Footer from './components/Footer'
 import CardPost from './components/CardPost'
 import Aside from './components/Aside'
 import TabNav from './components/TabNav'
+import Link from 'next/link'
+import BackToTop from './components/BackToTop'
 
 const fakeLatestPosts = Array.from({ length: 6 }).map((_, i) => ({
 	author: { name: 'Jane Doe', avatar: '/profile.jpg' },
@@ -54,26 +56,38 @@ export default function Home() {
 							</div>
 						</div>
 					</section>
-					<section className="mt-28 flex max-w-5xl gap-7">
-						<TabNav
-							latestPosts={
-								<div className="flex w-full flex-col gap-7">
-									{fakeLatestPosts.map((post, idx) => (
-										<CardPost key={idx} {...post} />
-									))}
-								</div>
-							}
-							mostViewedPosts={
-								<div className="flex w-full flex-col gap-7">
-									{fakeMostViewedPosts.map((post, idx) => (
-										<CardPost key={idx} {...post} />
-									))}
-								</div>
-							}
-						/>
-						<Aside />
+					<section className="mt-14 flex max-w-5xl gap-0 md:mt-28 md:gap-7">
+						<div className="flex w-full flex-col gap-8 lg:w-[70%]">
+							<TabNav
+								latestPosts={
+									<div className="flex w-full flex-col gap-7">
+										{fakeLatestPosts.map((post, idx) => (
+											<CardPost key={idx} {...post} />
+										))}
+									</div>
+								}
+								mostViewedPosts={
+									<div className="flex w-full flex-col gap-7">
+										{fakeMostViewedPosts.map((post, idx) => (
+											<CardPost key={idx} {...post} />
+										))}
+									</div>
+								}
+							/>
+							<Link
+								href="/posts"
+								className="mt-4 self-center rounded-full border-2 border-black bg-transparent px-8 py-3.5 text-sm font-bold transition hover:bg-black hover:text-white md:py-4 md:text-base"
+							>
+								Ver mais
+							</Link>
+						</div>
+						<div className="mt-[90px] hidden w-[30%] lg:flex">
+							<Aside />
+						</div>
 					</section>
 				</div>
+
+				<BackToTop />
 				<Footer />
 			</div>
 		</>
