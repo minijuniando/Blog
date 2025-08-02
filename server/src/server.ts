@@ -8,10 +8,14 @@ import { userRoutes } from "./routes/user";
 import { loginRoute } from "./routes/user/login";
 import { signupRoute } from "./routes/user/signup";
 import { viewRoute } from "./routes/views";
+import { swaggerDocs } from "./common/docs";
+import cors from "cors";
 
 export const app = express();
 
 app.use(express.json());
+app.use(cors());
+app.disable("x-powered-by");
 
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
@@ -30,5 +34,6 @@ app.listen(env.PORT, (err: Error | undefined): void => {
 		console.log(err);
 		throw err;
 	}
+	swaggerDocs(app);
 	console.log(chalk.blueBright(`HTTP Server Running on ${env.PORT}`));
 });
