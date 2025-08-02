@@ -15,6 +15,7 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^24.0.13",
+    "@types/swagger-jsdoc": "^6.0.4",
     "chalk": "^5.4.1",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
@@ -28,6 +29,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/nodemailer": "^6.4.17",
+    "@types/swagger-ui-express": "^4.1.8",
     "bcrypt": "^6.0.0",
     "envalid": "^8.1.0",
     "express": "^5.1.0",
